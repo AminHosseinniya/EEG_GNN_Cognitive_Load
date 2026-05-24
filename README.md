@@ -31,7 +31,7 @@ actual flow of the work:
 6. **Fairness Analysis** — the two best models are evaluated separately 
    on male and female subgroups to assess demographic robustness
 
-The notebook `notebooks/eeg_gnn_thesis.ipynb` implements all of these 
+The notebook `eeg_gnn_thesis.ipynb` implements all of these 
 steps end-to-end in the same order.
 
 
