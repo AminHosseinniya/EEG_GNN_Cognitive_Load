@@ -11,6 +11,29 @@ Tarbiat Modares University, Faculty of Industrial Engineering
 Department of Information Technology Engineering — 2025
 
 ---
+## How This Repository Is Organized
+
+This project follows a sequential research pipeline. If you are reading 
+this for the first time, the sections below are ordered to match the 
+actual flow of the work:
+
+1. **Datasets** — two public EEG datasets are loaded and harmonized into 
+   one unified corpus
+2. **Signal Representation** — raw signals are segmented into 30-second 
+   windows, then further into 1-second sub-windows
+3. **Graph Representations** — sub-windows and channels are converted into 
+   two types of graphs: a simple channel graph and a richer heterogeneous 
+   multi-relational graph
+4. **Models** — four GNN architectures and one LSTM baseline are trained, 
+   each on the appropriate graph type
+5. **Results** — models are evaluated and compared using six metrics, 
+   training curves, and confusion matrices
+6. **Fairness Analysis** — the two best models are evaluated separately 
+   on male and female subgroups to assess demographic robustness
+
+The notebook `notebooks/eeg_gnn_thesis.ipynb` implements all of these 
+steps end-to-end in the same order.
+
 
 ## Overview
 
@@ -34,7 +57,11 @@ similarity across time.
 
 ## Datasets
 
-This project uses two publicly available EEG datasets:
+This project uses two publicly available EEG datasets. The two datasets were selected because they share a common set of frontal 
+EEG channels and the same cognitive task (mental arithmetic), but differ 
+in recording hardware, subject demographics, and number of cognitive load 
+levels. Combining them increases the diversity of the training data. Both 
+are publicly available and require no registration to download.
 
 | Dataset | Subjects | Recordings | Task | Sampling Rate |
 |---------|----------|------------|------|---------------|
@@ -49,6 +76,13 @@ This project uses two publicly available EEG datasets:
 ---
 
 ## Signal Representation
+
+Raw EEG recordings vary in length and come from different devices. Before 
+any modeling can happen, signals need to be brought to a common format. 
+This section shows what the raw signal looks like, and how it is cut into 
+fixed-length pieces. The 30-second hyper-window is the unit of 
+classification — one label per window. The 1-second sub-window is the 
+unit of graph nodes — one node per sub-window per channel.
 
 ### Raw EEG Signal
 ![Raw EEG Signal](assets/raw_eeg_signal.png)
@@ -69,7 +103,15 @@ This project uses two publicly available EEG datasets:
 
 ## Graph Representations
 
-Two graph types were designed and compared:
+Rather than feeding raw signals or flat feature vectors into a neural 
+network, this project converts each 30-second window into a graph. 
+Two graph designs are compared. The channel graph is simpler — it only 
+captures which brain regions are correlated with each other. The 
+heterogeneous graph is richer — it additionally captures how activity 
+evolves over time within each channel and which sub-windows share 
+similar signal patterns. The hypothesis is that the richer relational 
+structure of the heterogeneous graph leads to better classification, 
+and the results confirm this.
 
 ### 1. Channel Graph
 ![Channel Graph Diagram](assets/channel_graph_diagram.png)
@@ -95,7 +137,14 @@ Two graph types were designed and compared:
 
 ## Models
 
-Five models were trained and compared:
+Four GNN architectures are evaluated: GCN and GAT are applied to the 
+simpler channel graph, while RGCN and GAT-Hetero are applied to the 
+heterogeneous graph. RGCN is specifically chosen for the heterogeneous 
+graph because it learns separate weight matrices for each edge type, 
+allowing it to treat temporal, channel, and similarity edges differently. 
+An LSTM trained directly on raw signal sequences serves as the non-graph 
+baseline, representing the conventional deep learning approach to EEG 
+classification.
 
 | Model | Graph Type | Architecture |
 |-------|-----------|--------------|
@@ -108,6 +157,13 @@ Five models were trained and compared:
 ---
 
 ## Results
+
+All models were evaluated on the same held-out test set (15% of the data) 
+that was never seen during training or validation. Six metrics are reported: 
+accuracy and F1 score reflect threshold-dependent classification quality, 
+while ROC-AUC and PR-AUC are threshold-independent and better reflect 
+performance under class imbalance. The results are presented as a table, 
+followed by training curves, confusion matrices, and ROC/PR curves.
 
 ### Overall Performance
 
@@ -177,8 +233,14 @@ The plots below show the full training history of each model. Although training 
 
 ## Fairness Analysis
 
-Model performance was evaluated separately for male and female subjects 
-to assess demographic robustness.
+Most EEG classification studies report only aggregate accuracy without 
+examining whether performance is consistent across demographic groups. 
+Since EEG signals are known to vary across individuals, a model that 
+works well on average may still underperform for specific subgroups. 
+Here, the two best-performing models — RGCN-Hetero and GAT-Hetero — 
+are evaluated separately on male (n=209) and female (n=74) subgroups 
+from the EEGMAT dataset. Note that the TXT dataset has no embedded 
+demographic metadata and is therefore excluded from this analysis.
 
 ![Fairness Confusion Matrices](assets/fairness_confusion.png)
 > **Figure 19** — Confusion matrices for GAT-Hetero on female (n=74, acc=0.797) 
