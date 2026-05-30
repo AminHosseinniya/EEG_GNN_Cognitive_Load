@@ -6,9 +6,8 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **Master's Thesis** — Mohammad Amin Hosseinnia  
-Supervisor: Dr. Elham Akhoundzadeh  
 Tarbiat Modares University, Faculty of Industrial Engineering  
-Department of Information Technology Engineering — 2025
+Department of Information Technology Engineering, 2025
 
 ---
 ## How This Repository Is Organized
