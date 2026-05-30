@@ -5,7 +5,7 @@
 [![PyG](https://img.shields.io/badge/PyTorch_Geometric-2.3+-orange.svg)](https://pyg.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**Master's Thesis** — Mohammad Amin Hosseinnia  
+**Master's Thesis** - Mohammad Amin Hosseinnia  
 Tarbiat Modares University, Faculty of Industrial Engineering  
 Department of Information Technology Engineering, 2025
 
