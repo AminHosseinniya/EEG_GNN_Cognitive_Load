@@ -6,8 +6,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **Master's Thesis** - Mohammad Amin Hosseinnia  
-Tarbiat Modares University, Faculty of Industrial Engineering  
-Department of Information Technology Engineering, 2025
+Tarbiat Modares University, Department of Information Technology Engineering, 2025
 
 ---
 ## How This Repository Is Organized
@@ -16,18 +15,18 @@ This project follows a sequential research pipeline. If you are reading
 this for the first time, the sections below are ordered to match the 
 actual flow of the work:
 
-1. **Datasets** — two public EEG datasets are loaded and harmonized into 
+1. **Datasets** - two public EEG datasets are loaded and harmonized into 
    one unified corpus
-2. **Signal Representation** — raw signals are segmented into 30-second 
+2. **Signal Representation** - raw signals are segmented into 30-second 
    windows, then further into 1-second sub-windows
-3. **Graph Representations** — sub-windows and channels are converted into 
+3. **Graph Representations** - sub-windows and channels are converted into 
    two types of graphs: a simple channel graph and a richer heterogeneous 
    multi-relational graph
-4. **Models** — four GNN architectures and one LSTM baseline are trained, 
+4. **Models** - four GNN architectures and one LSTM baseline are trained, 
    each on the appropriate graph type
-5. **Results** — models are evaluated and compared using six metrics, 
+5. **Results** - models are evaluated and compared using six metrics, 
    training curves, and confusion matrices
-6. **Fairness Analysis** — the two best models are evaluated separately 
+6. **Fairness Analysis** - the two best models are evaluated separately 
    on male and female subgroups to assess demographic robustness
 
 The notebook `eeg_gnn_thesis.ipynb` implements all of these 
@@ -49,7 +48,7 @@ similarity across time.
 ## Pipeline
 
 ![Research Flowchart](assets/flowchart.png)
-> **Figure 1** — Full research pipeline: from raw EEG to graph construction, 
+> **Figure 1** - Full research pipeline: from raw EEG to graph construction, 
 > model training, evaluation, and fairness analysis.
 
 ---
